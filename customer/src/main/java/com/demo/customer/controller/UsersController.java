@@ -3,6 +3,7 @@ package com.demo.customer.controller;
 import com.demo.customer.data.User;
 import com.demo.customer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,13 @@ public class UsersController {
     @PostMapping
     public User registerUser(@RequestBody User user) {
         return userService.save(user);
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity<String> loginUser(@RequestBody UserDto user) {
+        return userService.findUser(user.phone, user.password)
+                .map(e -> ResponseEntity.ok("Success"))
+                .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Failed"));
     }
 
     @PutMapping("/{id}")

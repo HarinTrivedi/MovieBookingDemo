@@ -19,10 +19,10 @@ import java.time.LocalDateTime;
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long userId;
-    private Long showId;
+    private int id;
+    private int userId;
+    private int showId;
     private int seats;
     private LocalDateTime bookingTime;
-    private boolean status;
+    private String status;
 }

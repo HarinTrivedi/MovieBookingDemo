@@ -16,10 +16,11 @@ import java.time.LocalDateTime;
 public class Show {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @ManyToOne
     private Theatre theatre;
     @ManyToOne private Movie movie;
     private LocalDateTime dateTime;
     private int seatsAvailable;
+    private LocalDateTime releaseDate;
 }

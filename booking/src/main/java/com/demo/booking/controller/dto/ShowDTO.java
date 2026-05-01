@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShowDTO {
-    private Long id;
+    private int id;
     private String movieName;
-    private int seats;
-    private LocalDateTime seatsAvailable;
+    private LocalDateTime dateTime;
+    private int seatsAvailable;
 }

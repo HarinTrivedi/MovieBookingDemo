@@ -1,8 +1,10 @@
 package com.demo.booking.controller;
 
+import com.demo.booking.controller.dto.ShowDTO;
 import com.demo.booking.data.Booking;
 import com.demo.booking.service.BookingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,15 +17,18 @@ public class BookingController {
     private final ShowsClient showsClient;
 
     @PostMapping
-    public Booking book(@RequestBody Booking booking) {
+    public ResponseEntity<Booking> book(@RequestBody Booking booking) {
         ShowDTO show = showsClient.getShowById(booking.getShowId());
 
-        if(show.getSeatsAvailablegetSeats() < booking.getSeats()) {
-            return ResponseEntity.badRequest().body("Not enough seats available for booking").build();
+        // We can have custom exception for general error message format
+        if(show.getSeatsAvailable() < booking.getSeats()) {
+            var obj = new Booking();
+            obj.setStatus("Not enough seats available for booking");
+            return ResponseEntity.badRequest().body(obj);
         }
 
-        // Save via Feign client OR Send message in RabbitMQ for oreder processing
-        return service.saveBooking(booking, "BOOKED");
+        // TODO Save via Feign client OR Send message in RabbitMQ for oreder processing
+        return ResponseEntity.ok(service.saveBooking(booking, "BOOKED"));
     }
 
     // can update booking with CANCELLED or FAILED

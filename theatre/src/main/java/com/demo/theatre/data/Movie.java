@@ -19,10 +19,11 @@ import java.time.LocalDateTime;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String title;
     private String language;
     private String genre;
+    private String city;
     private int duration;
     private LocalDateTime releaseDate;
 }
